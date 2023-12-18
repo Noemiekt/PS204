@@ -3,7 +3,7 @@ function [phi] = classifieur(x,S,Bx,k,m)
 % S = sous-espace vectoriel S engendré par les l eigenfaces les plus énergétiques
 % Bx = base d’apprentissage
 % k = nombre de plus proche voisin
-% m = le nombre d'individu
+% m = le nombre d'individu présent dans une classe
 
 x_moy = mean(x); %Moyenne empirique de x
 
