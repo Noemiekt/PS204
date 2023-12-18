@@ -26,8 +26,10 @@ for i = 1:m
     iC = (i - 1) * Nc + 1 : i * Nc;
 
     % Additionner les colonnes du groupe actuel
-    Mu_chap(:, i) = sum(wbase(:, iC), 2);
+    Mu_chap(:, i) = sum(wbase(:, iC), 2)/Nc;
 end
+
+
 
 %% Matrice de covariance empirique
 
@@ -55,9 +57,8 @@ for j=1:m
     phi_tab(j)=sqrt(sum((Sigma_chap^(-1/2)*tmp).^2));
 end
 
-disp(phi_tab);
-phi=floor(min(phi_tab));
-
+[~, idx_min] = min(phi_tab);
+phi = idx_min(1);
 
 end
 

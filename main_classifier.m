@@ -98,11 +98,11 @@ disp(phi_train_kp_test);
 
 %% Classifieur Gaussien
 
-x = data_trn(:,1);
+x = data_trn(:,31);
 [~,l]=size(S);
 phi_gauss = classifieurgaussien(x,Bx,m,l,Ni,Nc, S);
 
-disp("Avec un x de l'entrainmenet et gauss et k<m:");
+disp("Avec un x de l'entrainmenet et gauss ");
 disp(phi_gauss);
 
 
