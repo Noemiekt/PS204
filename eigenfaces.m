@@ -3,6 +3,8 @@
 clc;
 clear all;
 close all;
+dbstop if error;
+
 
 %% Data extraction
 % Training set
@@ -157,8 +159,15 @@ else
     disp(['The smallest dimension l* to achieve a ratio of 0.9 is: ', num2str(l_values(l_star-1))]);
 end
 
-% Extraction des l_star premières colonnes de la matrice U
+%% Extraction des l_[phi] = classifieur(x,S,Bx,k,m), [phi] = classifieur(x,S,Bx,k,m) star premières colonnes de la matrice U
+
 S = U(:, 1:l_values(l_star-1));
+x = data_trn(:,11);
+Bx = data_trn;
+k = 12;
+m = 10; % nobre d'individues presents dans une classe
+
+phi = classifieur(x,S,Bx,k,m);
 
 
 

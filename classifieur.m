@@ -20,17 +20,22 @@ for i=1:Ni
     wbase(:,i)=(Bx(:,i)-xi_moy).' * S;
 end
 
-distances = sqrt(sum((wbase - repmat(w, 1, Ni)).^2)); % Calcul des distances entre w de l'image et w de la base
+distances = zeros(1,Ni);
+for i=1:Ni
+    distances(i) = sqrt(sum((w'-wbase(:,i)).^2)); % Calcul des distances entre w de l'image et w de la base
+end
+
+
 
 % Tri des distances et obtention des indices des k plus proches voisins
 [~, indices] = sort(distances);
 
 % Sélection des k plus proches voisins
-k_plus_proches = indices(1:k);
+k_plus_proches = indices(1:k)
 
-classes = floor(k_plus_proches/m);
+classes = ceil(k_plus_proches/m)
 
-phi=mode(classes); %classifieur k-NN
+phi=mode(classes) %classifieur k-NN
 
 end
 
