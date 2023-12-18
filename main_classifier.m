@@ -92,9 +92,18 @@ disp(phi_train_kp);
 disp("Avec un x du test1 et k>m:");
 disp(phi_train_kg_test);
 
-disp("Avec un x deu test1 et k<m:");
+disp("Avec un x du test1 et k<m:");
 disp(phi_train_kp_test);
 
+
+%% Classifieur Gaussien
+
+x = data_trn(:,1);
+[~,l]=size(S);
+phi_gauss = classifieurgaussien(x,Bx,m,l,Ni,Nc, S);
+
+disp("Avec un x de l'entrainmenet et gauss et k<m:");
+disp(phi_gauss);
 
 
 

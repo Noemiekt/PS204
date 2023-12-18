@@ -1,4 +1,4 @@
-function [phi] = classifieurgaussien(x,Bx,m,l,Ni,Nc)
+function [phi] = classifieurgaussien(x,Bx,m,l,Ni,Nc, S)
 %% Données
 % x = image en entrée
 % Bx = base d’apprentissage
@@ -31,7 +31,7 @@ end
 
 %% Matrice de covariance empirique
 
-Sigma_chap=zeros(m,l);
+Sigma_chap=zeros(l,l);
 
 for j=1:m
     for i=1:Nc
@@ -39,6 +39,8 @@ for j=1:m
         Sigma_chap=Sigma_chap+tmp*tmp';
     end
 end
+
+Sigma_chap = Sigma_chap/Ni;
 
 %% Traitement
 %% Composantes principales
@@ -49,11 +51,12 @@ w = (x-x_moy).' * S;
 
 phi_tab=zeros(1,m);
 for j=1:m
-    tmp=w-Mu_chap(:, j);
-    phi_tab(j)=sqrt(sum(Sigma_chap^(-1/2)*tmp));
+    tmp=w'-Mu_chap(:, j);
+    phi_tab(j)=sqrt(sum((Sigma_chap^(-1/2)*tmp).^2));
 end
 
-phi=min(phi_tab);
+disp(phi_tab);
+phi=floor(min(phi_tab));
 
 
 end
