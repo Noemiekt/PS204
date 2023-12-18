@@ -31,11 +31,11 @@ end
 [~, indices] = sort(distances);
 
 % Sélection des k plus proches voisins
-k_plus_proches = indices(1:k)
+k_plus_proches = indices(1:k);
 
-classes = ceil(k_plus_proches/m)
+classes = ceil(k_plus_proches/m);
 
-phi=mode(classes) %classifieur k-NN
+phi=mode(classes); %classifieur k-NN
 
 end
 

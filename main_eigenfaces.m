@@ -100,6 +100,15 @@ title('Reconstruction Ratio κ(l)');
 xlabel('Number of Components l');
 ylabel('κ(l)');
 
+% Find the smallest l that gives a k(l) of at least 0.9
+l_star = find(k_values >= 0.9, 1, 'first');
+
+% Affichage de l_star
+if isempty(l_star)
+    disp('No dimension l* found that achieves the ratio of 0.9.');
+else
+    disp(['The smallest dimension l* to achieve a ratio of 0.9 is: ', num2str(l_values(l_star-1))]);
+end
 
 
 

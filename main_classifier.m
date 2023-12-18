@@ -51,59 +51,49 @@ end
 
 % Calcul des k
 subject_indices = [1, 11, 21, 31, 41, 51]; 
-[l_values, k_values, mean_image, l_star] = k_values(subject_indices, data_trn, U, Ni);
+[l_values, k_values, mean_image] = k_values(subject_indices, data_trn, U, Ni);
+l_star = find(k_values >= 0.9, 1, 'first');
 
 
 %% Extraction des l_[phi] = classifieur(x,S,Bx,k,m), [phi] = classifieur(x,S,Bx,k,m) star premières colonnes de la matrice U
 
 S = U(:, 1:l_values(l_star-1));
 Bx = data_trn;
-
-% Avec un x de l'entrainement et k>m
-x = data_trn(:,11);
-k = 12;
-Nc = 10; % nobre d'individues presents dans une classe
-phi_train_kg = classifieur(x,S,Bx,k,Nc);
-
-% Avec un x de l'entrainement et k<m
-x = data_trn(:,11);
-k = 4;
-Nc = 10; % nobre d'individues presents dans une classe
-phi_train_kp = classifieur(x,S,Bx,k,Nc);
+ 
+% % Avec un x de l'entrainement et k>m
+% x = data_trn(:,11);
+% k = 12;
+% Nc = 10; % nobre d'individues presents dans une classe
+% phi_train_kg = classifieur(x,S,Bx,k,Nc);
+% 
+% % Avec un x de l'entrainement et k<m
+% x = data_trn(:,11);
+% k = 4;
+% Nc = 10; % nobre d'individues presents dans une classe
+% phi_train_kp = classifieur(x,S,Bx,k,Nc);
 
 % Avec un x des test et k>m
 x = data_trn_test(:,11);
 k = 12;
 Nc = 10; % nobre d'individues presents dans une classe
 phi_train_kg_test = classifieur(x,S,Bx,k,Nc);
+% 
+% % Avec un x des test et k<m
+% x = data_trn_test(:,11);
+% k = 4;
+% Nc = 10; % nobre d'individues presents dans une classe
+% phi_train_kp_test = classifieur(x,S,Bx,k,Nc);
 
-% Avec un x des test et k<m
-x = data_trn_test(:,11);
-k = 4;
-Nc = 10; % nobre d'individues presents dans une classe
-phi_train_kp_test = classifieur(x,S,Bx,k,Nc);
-
-disp("Avec un x de l'entrainement et k>m:");
-disp(phi_train_kg);
-
-disp("Avec un x de l'entrainement et k<m:");
-disp(phi_train_kp);
+% disp("Avec un x de l'entrainement et k>m:");
+% disp(phi_train_kg);
+% 
+% disp("Avec un x de l'entrainement et k<m:");
+% disp(phi_train_kp);
 
 disp("Avec un x du test1 et k>m:");
 disp(phi_train_kg_test);
 
-disp("Avec un x du test1 et k<m:");
-disp(phi_train_kp_test);
-
-
-%% Classifieur Gaussien
-
-x = data_trn(:,31);
-[~,l]=size(S);
-phi_gauss = classifieurgaussien(x,Bx,m,l,Ni,Nc, S);
-
-disp("Avec un x de l'entrainmenet et gauss ");
-disp(phi_gauss);
-
+% disp("Avec un x du test1 et k<m:");
+% disp(phi_train_kp_test);
 
 
