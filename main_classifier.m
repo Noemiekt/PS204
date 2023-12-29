@@ -1,12 +1,11 @@
-% P. Vallet (Bordeaux INP), 2019
-
+%% KEGL Noémie, SALLMONE Armela & MONY Alexandra
 clc;
 clear all;
 close all;
-dbstop if error;
 
-
+%% 4) Classification - Classifieur k-NN
 %% Data extraction
+
 % Training set
 adr = './database/training1/';
 fld = dir(adr);
@@ -27,7 +26,7 @@ end
 
 
 % Test set
-adr_test = './database/test1/';
+adr_test = './database/test3/';
 fld_test = dir(adr_test);
 nb_elt_test = length(fld_test);
 % Data matrix containing the training images in its columns 
@@ -55,45 +54,33 @@ subject_indices = [1, 11, 21, 31, 41, 51];
 l_star = find(k_values >= 0.9, 1, 'first');
 
 
-%% Extraction des l_[phi] = classifieur(x,S,Bx,k,m), [phi] = classifieur(x,S,Bx,k,m) star premières colonnes de la matrice U
+%% Matrice de confusion
 
 S = U(:, 1:l_values(l_star-1));
 Bx = data_trn;
+k = 4;
+Nc = 10; 
+Nc_test = Ni_test/6;
+
+MatConf=zeros(6,6);
  
-% % Avec un x de l'entrainement et k>m
-% x = data_trn(:,11);
-% k = 12;
-% Nc = 10; % nobre d'individues presents dans une classe
-% phi_train_kg = classifieur(x,S,Bx,k,Nc);
-% 
-% % Avec un x de l'entrainement et k<m
-% x = data_trn(:,11);
-% k = 4;
-% Nc = 10; % nobre d'individues presents dans une classe
-% phi_train_kp = classifieur(x,S,Bx,k,Nc);
+for c = 1:6
+    for ind = 1:Nc_test
+        x = data_trn_test(:,(c-1)*Nc_test+ind);
+        phi = classifieur(x,S,Bx,k,Nc);
+        MatConf(c,phi)=MatConf(c,phi)+1;
+    end
+end
 
-% Avec un x des test et k>m
-x = data_trn_test(:,11);
-k = 12;
-Nc = 10; % nobre d'individues presents dans une classe
-phi_train_kg_test = classifieur(x,S,Bx,k,Nc);
-% 
-% % Avec un x des test et k<m
-% x = data_trn_test(:,11);
-% k = 4;
-% Nc = 10; % nobre d'individues presents dans une classe
-% phi_train_kp_test = classifieur(x,S,Bx,k,Nc);
+MatConf=round(MatConf./Nc_test,2);
+format shortg;
+disp (MatConf);
 
-% disp("Avec un x de l'entrainement et k>m:");
-% disp(phi_train_kg);
-% 
-% disp("Avec un x de l'entrainement et k<m:");
-% disp(phi_train_kp);
 
-disp("Avec un x du test1 et k>m:");
-disp(phi_train_kg_test);
 
-% disp("Avec un x du test1 et k<m:");
-% disp(phi_train_kp_test);
+
+
+
+
 
 

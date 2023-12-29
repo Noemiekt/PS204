@@ -1,11 +1,10 @@
-% P. Vallet (Bordeaux INP), 2019
-
+%% KEGL Noémie, SALLMONE Armela & MONY Alexandra
 clc;
 clear all;
 close all;
-dbstop if error;
 
 
+%% Réduction de dimension et eigenfaces
 %% Data extraction
 % Training set
 adr = './database/training1/';
@@ -41,6 +40,7 @@ for i=1:Nc
           F(192*(i-1)+1:192*i,168*(j-1)+1:168*j) = reshape(data_trn(:,pos),[192,168]);
     end
 end
+
 figure;
 imagesc(F);
 colormap(gray);

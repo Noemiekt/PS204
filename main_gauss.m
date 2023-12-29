@@ -1,11 +1,9 @@
-% P. Vallet (Bordeaux INP), 2019
-
+%% KEGL Noémie, SALLMONE Armela & MONY Alexandra
 clc;
 clear all;
 close all;
-dbstop if error;
 
-
+%% 4) Classification - Classifieur gaussien
 %% Data extraction
 % Training set
 adr = './database/training1/';
@@ -27,7 +25,7 @@ end
 
 
 % Test set
-adr_test = './database/test1/';
+adr_test = './database/test6/';
 fld_test = dir(adr_test);
 nb_elt_test = length(fld_test);
 % Data matrix containing the training images in its columns 
@@ -55,18 +53,25 @@ subject_indices = [1, 11, 21, 31, 41, 51];
 l_star = find(k_values >= 0.9, 1, 'first');
 
 
-%% Classifieur Gaussien
+%% Matrice de confusion
 
 S = U(:, 1:l_values(l_star-1));
 Bx = data_trn;
-k = 12;
-Nc = 10; % nobre d'individues presents dans une classe
-x = data_trn_test(:,31);
 [~,l]=size(S);
-phi_gauss = classifieurgaussien(x,Bx,m,l,Ni,Nc, S);
+Nc = 10; 
+Nc_test = Ni_test/6;
 
-disp("Avec un x de l'entrainement et gauss: ");
-disp(phi_gauss);
+MatConf=zeros(6,6);
+ 
+for c = 1:6
+    for ind = 1:Nc_test
+        x = data_trn_test(:,(c-1)*Nc_test+ind);
+        phi = classifieurgaussien(x,Bx,m,l,Ni,Nc, S);
+        MatConf(c,phi)=MatConf(c,phi)+1;
+    end
+end
 
-
+MatConf=round(MatConf./Nc_test,2);
+format shortg;
+disp (MatConf);
 
