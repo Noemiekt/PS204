@@ -30,7 +30,7 @@ end
 %% Valeurs propres
 
 % Calcul de U
-[U, Nc, size_cls_trn] = eigenfaces(data_trn, lb_trn, P, N);
+[U, Nc, size_cls_trn, Val_non_zero, Vect_non_zero] = eigenfaces(data_trn, lb_trn, P, N);
 
 % Affichage de la database
 F = zeros(192*Nc,168*max(size_cls_trn));
@@ -91,7 +91,7 @@ for j = 1:length(subject_indices)
         title(['Subject : ', num2str(subject_idx), ', ',  ' l :', num2str(l)]);
     end
 end
-sgtitle('Reconstruction Evolution for Each Subject');
+sgtitle('Reconstruction avec évolution de l pour les 6 sujets de la base');
 
 % Plot k(l)
 figure;

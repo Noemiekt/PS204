@@ -1,4 +1,4 @@
-function [U, Nc, size_cls_trn, Val_non_zero, Vect_non_zero] = eigenfaces(data_trn, lb_trn, P, N)
+function [U, Nc, size_cls_trn] = eigenfaces(data_trn, lb_trn, P, N)
     
     % Classes contained in the training set
     [~,I]=sort(lb_trn);
@@ -13,18 +13,18 @@ function [U, Nc, size_cls_trn, Val_non_zero, Vect_non_zero] = eigenfaces(data_tr
     XTX = data_trn' * data_trn;
     
     % On cherche les vecteurs et valeurs propres
-    [Val, Vect] = eig(XTX);
+    [V, D] = eig(XTX);
     
-    [eigenvalues, sortIdx] = sort(diag(Vect), 'descend');
-    Val = Val(:, sortIdx);
+    [eigenvalues, sortIdx] = sort(diag(D), 'descend');
+    V = V(:, sortIdx);
     
     % On cherche les valeurs nons nulles
     non_zero_indices = eigenvalues > 0;
-    Val_non_zero = Val(:, non_zero_indices);
-    Vect_non_zero = Vect(non_zero_indices, non_zero_indices);
+    V_non_zero = V(:, non_zero_indices);
+    D_non_zero = D(non_zero_indices, non_zero_indices);
     
     % Creation de U
-    U = data_trn * Val_non_zero / sqrtm(Vect_non_zero);
+    U = data_trn * V_non_zero / sqrtm(D_non_zero);
     U = normc(U);
 
 end 
