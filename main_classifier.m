@@ -26,7 +26,7 @@ end
 
 
 % Test set
-adr_test = './database/test3/';
+adr_test = './database/test1/';
 fld_test = dir(adr_test);
 nb_elt_test = length(fld_test);
 % Data matrix containing the training images in its columns 
@@ -58,7 +58,7 @@ l_star = find(k_values >= 0.9, 1, 'first');
 
 S = U(:, 1:l_values(l_star-1));
 Bx = data_trn;
-k = 4;
+k = 20;
 Nc = 10; 
 Nc_test = Ni_test/6;
 
